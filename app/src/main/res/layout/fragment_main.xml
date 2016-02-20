@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context="org.wings_lab.safedrive.MainFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Monitoring"
+        android:padding="18dp"
+        android:gravity="center"
+        android:textSize="36dp"
+        android:id="@+id/main_frag_status"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="*"
+        android:id="@+id/star"
+        android:layout_below="@id/main_frag_status"
+        android:textSize="40dp"
+        android:gravity="center"
+        />
+
+    <Button
+        android:layout_margin="36dp"
+        android:padding="18dp"
+        android:id="@+id/btn_toggle_monitor"
+        android:text="Start"
+        android:textSize="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:layout_below="@id/star"/>
+    <ProgressBar
+        android:id="@+id/load_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_toggle_monitor"
+       />
+
+
+</RelativeLayout>

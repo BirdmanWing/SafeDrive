@@ -17,11 +17,15 @@ import java.util.HashMap;
 public class SafeDrive {
     private Context context;
     private boolean isSkyDriveOn = false;
-    public static final int MAX_CLOSE_SECOND = 5;
+    private int speed = 0;
+    public static final int MAX_CLOSE_SECOND = 2;
     public static final long INTERVAL = 1000;
     public SafeDrive(Context context) {
         this.context = context;
+    }
 
+    public int getSpeed() {
+        return speed;
     }
 
     public interface IsEyeClosing {
@@ -29,6 +33,7 @@ public class SafeDrive {
         String STREAMS_NAME = "IsEyeClosing";
         String DEVICE_ID = "1e0393a13b9ffef6325b9fb4bc2aac61";
     }
+
     public boolean isSkyDriveOn() {
         return isSkyDriveOn;
     }
@@ -50,21 +55,32 @@ public class SafeDrive {
 
                                 String str = "";
                                 boolean isEyeClosedForFiveSec = false;
-                                int count = 0;
-                                for (int i = objects.length-1; i >= 0; i--) {
+                                int closedCount = 0, openedCount = 0;
+                                for (int i = objects.length - 1; i >= 0; i--) {
                                     M2XValueObject obj = objects[i];
                                     actionCloseForFive.onAccessingObject(obj);
 
                                     str += "\n" + obj.getTimestamp() + " " + obj.getValue();
-                                    if (count >= MAX_CLOSE_SECOND) {
+                                    if (closedCount >= MAX_CLOSE_SECOND) {
                                         isEyeClosedForFiveSec = true;
                                         break;
                                     }
-                                    if (obj.getValue() == 1) count++;
-                                    else count = 0;
+
+                                    if (obj.getValue() == 1) {
+                                        closedCount++;
+                                        openedCount = 0;
+                                    } else {
+                                        closedCount = 0;
+                                        openedCount++;
+                                    }
+
                                 }
-                                if (isEyeClosedForFiveSec)
+                                if (openedCount >= 5) {
+                                    actionCloseForFive.onFiveSecondEyeOpened();
+                                }
+                                if (isEyeClosedForFiveSec){
                                     actionCloseForFive.onFiveSecondEyeClosed();
+                                }
                             }
 
                             @Override
