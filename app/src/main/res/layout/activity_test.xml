@@ -8,11 +8,25 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.wings_lab.safedrive.TestActivity">
-<Button
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="Go"
-    android:id="@+id/btn_go"
-    />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/btn_go"
+        />
+
+
+        <TextView
+            android:layout_below="@id/btn_go"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Data here"
+            android:id="@+id/tv_data_log"
+            android:gravity="bottom"
+            android:maxLines = "10"
+            android:scrollbars = "vertical"
+            />
+
+
 
 </RelativeLayout>

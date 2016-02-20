@@ -1,9 +1,11 @@
 package org.wings_lab.safedrive;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.att.m2x.android.listeners.ResponseListener;
 import com.att.m2x.android.main.M2XAPI;
@@ -20,6 +22,21 @@ import java.util.HashMap;
 public class TestActivity extends AppCompatActivity {
 
     private Button btn_go;
+    public static final int MAX_CLOSE_SECOND = 5;
+    private SafeDrive safeDrive = new SafeDrive(this);
+    private CallBack callBack = new CallBack() {
+        @Override
+        public void onFiveSecondEyeClosed() {
+            doVibrate();
+        }
+
+        @Override
+        public void onAccessingObject(M2XValueObject object) {
+            data_log.append(object.getTimestamp() + " " + object.getValue());
+        }
+    };
+
+    private TextView data_log;
     private interface IsEyeClosing {
         String M2X_API_KEY = "a34833cea4311a892de2d09b39b877b1  ";
         String STREAMS_NAME = "IsEyeClosing";
@@ -32,30 +49,21 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         btn_go = (Button)findViewById(R.id.btn_go);
+        data_log = (TextView)findViewById(R.id.tv_data_log);
         btn_go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                test(null);
-
+                if(safeDrive.isSkyDriveOn()) safeDrive.endSafeDrive();
+                else safeDrive.startSafeDrive(callBack);
             }
         });
 
         M2XAPI.initialize(getApplicationContext(), IsEyeClosing.M2X_API_KEY);
 
-
     }
-    public void test(View view) {
-       Device.listDataStreamValues(this, null, IsEyeClosing.DEVICE_ID, IsEyeClosing.STREAMS_NAME, new ResponseListener() {
-           @Override
-           public void onRequestCompleted(ApiV2Response result, int requestCode) {
-               M2XValueObject[] objects = IsEyeClosingParsers.parse(result.get_json());
-           }
 
-           @Override
-           public void onRequestError(ApiV2Response error, int requestCode) {
-
-           }
-       });
+    public void doVibrate() {
+        btn_go.setBackground(getDrawable(android.R.color.holo_red_dark));
     }
 
 
