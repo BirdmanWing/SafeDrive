@@ -8,6 +8,7 @@ import org.wings_lab.safedrive.parsers.M2XValueObject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -22,9 +23,12 @@ public class IsEyeClosingParsers {
             for(int i = 0; i < jsonArray.length(); i++) {
                 objs[i] = new M2XValueObject();
                 objs[i].setValue(jsonArray.getJSONObject(i).getInt("value"));
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS",new Locale("en"));
                 Date date = format.parse(jsonArray.getJSONObject(i).getString("timestamp"));
-                objs[i].setTimestamp(date);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                calendar.add(Calendar.HOUR, 8);
+                objs[i].setTimestamp(calendar.getTime());
             }
             return objs;
 

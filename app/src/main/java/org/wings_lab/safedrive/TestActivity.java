@@ -1,6 +1,8 @@
 package org.wings_lab.safedrive;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +19,7 @@ import org.w3c.dom.Text;
 import org.wings_lab.safedrive.models.IsEyeClosingParsers;
 import org.wings_lab.safedrive.parsers.M2XValueObject;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 public class TestActivity extends AppCompatActivity {
@@ -32,7 +35,7 @@ public class TestActivity extends AppCompatActivity {
 
         @Override
         public void onAccessingObject(M2XValueObject object) {
-            data_log.append(object.getTimestamp() + " " + object.getValue());
+            data_log.append("\n" + object.getTimestamp() + " " + object.getValue());
         }
     };
 
@@ -64,6 +67,9 @@ public class TestActivity extends AppCompatActivity {
 
     public void doVibrate() {
         btn_go.setBackground(getDrawable(android.R.color.holo_red_dark));
+        Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        v.vibrate(500);
     }
 
 

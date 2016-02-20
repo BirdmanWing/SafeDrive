@@ -7,8 +7,11 @@ import com.att.m2x.android.listeners.ResponseListener;
 import com.att.m2x.android.model.Device;
 import com.att.m2x.android.network.ApiV2Response;
 
+import org.json.JSONObject;
 import org.wings_lab.safedrive.models.IsEyeClosingParsers;
 import org.wings_lab.safedrive.parsers.M2XValueObject;
+
+import java.util.HashMap;
 
 
 public class SafeDrive {
@@ -16,9 +19,9 @@ public class SafeDrive {
     private boolean isSkyDriveOn = false;
     public static final int MAX_CLOSE_SECOND = 5;
     public static final long INTERVAL = 1000;
-
     public SafeDrive(Context context) {
         this.context = context;
+
     }
 
     public interface IsEyeClosing {
@@ -36,11 +39,11 @@ public class SafeDrive {
         new AsyncTask<Integer, Integer, Integer>() {
             @Override
             protected Integer doInBackground(Integer... params) {
-                SafeDriveDataGenerator generator = new SafeDriveDataGenerator(context);
-                generator.startGenerating();
                 while (isSkyDriveOn) {
                     try {
-                        Device.listDataStreamValues(context, null, IsEyeClosing.DEVICE_ID, IsEyeClosing.STREAMS_NAME, new ResponseListener() {
+                        HashMap<String, String> param = new HashMap<>();
+                        param.put("limit", "10");
+                        Device.listDataStreamValues(context, param , IsEyeClosing.DEVICE_ID, IsEyeClosing.STREAMS_NAME, new ResponseListener() {
                             @Override
                             public void onRequestCompleted(final ApiV2Response result, int requestCode) {
                                 M2XValueObject[] objects = IsEyeClosingParsers.parse(result.get_json());
@@ -48,7 +51,8 @@ public class SafeDrive {
                                 String str = "";
                                 boolean isEyeClosedForFiveSec = false;
                                 int count = 0;
-                                for (M2XValueObject obj : objects) {
+                                for (int i = objects.length-1; i >= 0; i--) {
+                                    M2XValueObject obj = objects[i];
                                     actionCloseForFive.onAccessingObject(obj);
 
                                     str += "\n" + obj.getTimestamp() + " " + obj.getValue();
@@ -71,14 +75,12 @@ public class SafeDrive {
                         Thread.sleep(INTERVAL);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                        generator.endGenerating();
                         return -1;
                     }
                 }
-                generator.endGenerating();
                 return 1;
             }
-        }.execute();
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
         return true;
     }
 
