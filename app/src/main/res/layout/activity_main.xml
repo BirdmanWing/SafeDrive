@@ -4,10 +4,79 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.wings_lab.safedrive.MainActivity">
+
+
+    <LinearLayout
+        android:background="#212121"
+        android:id="@+id/bottom_menu"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:layout_alignParentBottom="true"
+       >
+        <LinearLayout
+            android:id="@+id/menu_item_safe_driver"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_drive_eta_white_48dp"
+                />
+            <TextView
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Safe Drive"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:id="@+id/menu_item_admin"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_settings_input_component_white_48dp"
+                />
+            <TextView
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Testing"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/menu_item_map"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_location_searching_white_48dp"
+                />
+            <TextView
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"/>
+        </LinearLayout>
+       </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/main_frag_holder"
-        android:layout_height="match_parent">
-
+        android:layout_above="@id/bottom_menu">
     </FrameLayout>
 </RelativeLayout>

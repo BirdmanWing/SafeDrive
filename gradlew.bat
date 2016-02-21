@@ -57,16 +57,16 @@ set CMD_LINE_ARGS=
 set _SKIP=2
 
 :win9xME_args_slurp
-if "x%~1" == "x" goto onFiveSecondEyeClosed
+if "x%~1" == "x" goto onEyeCloseForTwoSec
 
 set CMD_LINE_ARGS=%*
-goto onFiveSecondEyeClosed
+goto onEyeCloseForTwoSec
 
 :4NT_args
 @rem Get arguments from the 4NT Shell from JP Software
 set CMD_LINE_ARGS=%$
 
-:onFiveSecondEyeClosed
+:onEyeCloseForTwoSec
 @rem Setup the command line
 
 set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar

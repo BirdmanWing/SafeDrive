@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    tools:context="org.wings_lab.safedrive.MainFragment">
+    tools:context=".fragments.MainFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Monitoring"
+        android:text="IDLE"
         android:padding="18dp"
         android:gravity="center"
         android:textSize="36dp"

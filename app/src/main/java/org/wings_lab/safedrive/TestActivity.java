@@ -29,7 +29,7 @@ public class TestActivity extends AppCompatActivity {
     private SafeDrive safeDrive = new SafeDrive(this);
     private CallBack callBack = new CallBack() {
         @Override
-        public void onFiveSecondEyeClosed() {
+        public void onEyeCloseForTwoSec() {
             doVibrate();
         }
 

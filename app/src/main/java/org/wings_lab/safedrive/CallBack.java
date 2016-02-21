@@ -7,7 +7,7 @@ import org.wings_lab.safedrive.parsers.M2XValueObject;
  */
 public abstract class CallBack {
 
-    public abstract void onFiveSecondEyeClosed();
+    public abstract void onEyeCloseForTwoSec();
     public void onFiveSecondEyeOpened(){};
     public void onAccessingObject(M2XValueObject object){};
 }
