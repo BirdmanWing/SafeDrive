@@ -29,12 +29,14 @@ public class MainFragment extends Fragment {
     private ProgressBar progressBar;
     private SafeDrive safeDrive;
     private Drawable defaultBtnBg;
+    private MediaPlayer mp;
     private CallBack callBack = new CallBack() {
         @Override
         public void onEyeCloseForTwoSec() {
             btn_toggle_monitor.setBackground(getContext().getDrawable(android.R.color.holo_red_dark));
             Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
             // Vibrate for 500 milliseconds
+            mp.start();
             v.vibrate(5000);
 
         }
@@ -56,6 +58,7 @@ public class MainFragment extends Fragment {
         @Override
         public void onFiveSecondEyeOpened() {
             btn_toggle_monitor.setBackground(defaultBtnBg);
+            mp.pause();
         }
     };
     @Override
@@ -86,8 +89,12 @@ public class MainFragment extends Fragment {
                     btn_toggle_monitor.setBackground(defaultBtnBg);
                     Vibrator vi = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                     vi.vibrate(0);
+                    if(mp.isPlaying()) mp.pause();
+
 
                 }
+                mp = MediaPlayer.create(getContext(), R.raw.www);
+                mp.setLooping(true);
             }
         });
         return rootView;
